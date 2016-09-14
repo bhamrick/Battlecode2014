@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map height="68" width="70">
+    <game seed="55555" rounds="2000"/>
+    <symbols>
+        <symbol terrain="NORMAL" type="TERRAIN" character="d"/>
+        <symbol terrain="VOID" type="TERRAIN" character="@"/>
+        <symbol terrain="ROAD" type="TERRAIN" character="r"/>
+        <symbol team="A" type="HQ" character="a"/>
+        <symbol team="B" type="HQ" character="A"/>
+    </symbols>
+    <data>
+<![CDATA[
+d0 d0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d3 d3 d3 d3 d3 d3 d3 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 d0 d0 d0 d0
+d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d3 d3 d0 d0 d0 d0 d0 d3 d3 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 d0
+d0 d3 d0 d0 A0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 d0
+d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d3 d3 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 d0
+d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 d0
+d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 d0
+d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d3 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0
+@0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 @0
+@0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 @0
+@0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 @0
+@0 @0 @0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0
+@0 @0 @0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0
+@0 @0 @0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0
+@0 @0 @0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d3 d0 @0
+@0 @0 d3 d0 d3 d3 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 @0
+@0 @0 d0 d0 d0 d0 d3 d3 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0
+@0 @0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d3 d0 d0 @0
+@0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0
+@0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0
+@0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 @0
+@0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 @0
+@0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 @0
+@0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0
+@0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d3 d0 d0 d0 d0 d0 d0 d3 d3 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 d0 @0
+@0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 @0
+@0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0
+@0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0
+@0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0
+@0 d0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d3 d3 d0 d0 d0 d0 d0 d0 d3 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0
+@0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0
+@0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0
+@0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0
+@0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0
+@0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0
+@0 d0 d3 d3 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0
+@0 d0 d0 d3 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 @0 @0
+@0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d3 d3 d0 d0 d0 d0 @0 @0
+@0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d3 d3 d0 d3 @0 @0
+@0 d0 d3 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 @0 @0 @0
+@0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 @0 @0 @0
+@0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 @0 @0 @0
+@0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 @0 @0 @0
+@0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0
+@0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 @0
+@0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0
+@0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d3 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0
+d0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0
+d0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0
+d0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0
+d0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 d0 d0 d3 d3 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d0
+d0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 a0 d0 d0 d3 d0
+d0 d0 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d3 d3 d0 d0 d0 d0 d0 d3 d3 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0
+d0 d0 d0 d0 d0 d3 d3 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d3 d3 d3 d3 d3 d3 d3 d0 d0 d0 d0 @0 @0 @0 @0 @0 @0 @0 d0 d0 d0 d0 d0 d0 d0 d3 d3 d0 d0 d0
+]]>
+    </data>
+</map>

@@ -1,0 +1,587 @@
+package team264;
+
+import battlecode.common.Direction;
+import battlecode.common.GameConstants;
+import battlecode.common.RobotController;
+import battlecode.common.*;
+import java.util.*;
+
+public class SoldierPlayer {
+    static MapLocation enemyHQLocation, hqLocation;
+    public static void run(RobotController rc) {
+        Random rand = new Random(rc.getRobot().getID());
+        Direction[] directions = {Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST};
+
+        hqLocation = rc.senseHQLocation();
+        enemyHQLocation = rc.senseEnemyHQLocation();
+        Pathfinder pather = new Pathfinder();
+        MapLocation rallypoint = hqLocation.add(hqLocation.directionTo(enemyHQLocation), -2);
+        try {
+            MapLocation loc = Communication.read_location(rc, Communication.rally_channel);
+            if (loc != null) {
+                rallypoint = loc;
+            }
+        } catch(Exception e) {
+            System.out.println("Exception reading rallypoint");
+        }
+        pather.setWaypoint(rallypoint);
+        Attacker attacker = new Attacker(rc, rand);
+        Team opp = rc.getTeam().opponent();
+
+        while (true) {
+            try {
+                if (rc.isActive()) {
+                    try {
+                        MapLocation pastr_loc = Communication.read_location(rc, Communication.pasture_channel);
+                        if (rc.getLocation().equals(pastr_loc)) {
+                            rc.construct(RobotType.PASTR);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Exception determining whether to pasturize");
+                    }
+                    if (attacker.doAttack(rc)) {
+                        rc.yield();
+                        continue;
+                    }
+                    Direction toMove = pather.nextDirection(rc);
+                    if (toMove != Direction.NONE) {
+                        try {
+                            customMove(rc, toMove);
+                        } catch (GameActionException e) {
+                            System.out.println("Exception from pathing");
+                        }
+                    } else {
+                        // With some probability, move randomly even if not requested in order to clear pasture locations.
+                        if (rand.nextInt(4) < 1) {
+                            Direction d = directions[rand.nextInt(directions.length)];
+                            if (rc.isActive() && customCanMove(rc, d)) {
+                                try {
+                                    customSneak(rc, d);
+                                } catch (GameActionException e) {
+                                    e.printStackTrace();
+                                    System.out.println("Exception during random move");
+                                }
+                            }
+                        }
+                    }
+                } else if(rc.getActionDelay() < 2.0) {
+                    MapLocation[] ourPastures = rc.sensePastrLocations(rc.getTeam());
+                    if (ourPastures.length == 0) {
+                        MapLocation loc = Communication.read_location(rc, Communication.rally_channel);
+                        if (loc != null) {
+                            rallypoint = loc;
+                        }
+                    } else {
+                        boolean okayRallyPoint = false;
+                        for (MapLocation p : ourPastures) {
+                            if (rallypoint.equals(p)) {
+                                okayRallyPoint = true;
+                            }
+                        }
+                        if (!okayRallyPoint) {
+                            rallypoint = ourPastures[rand.nextInt(ourPastures.length)];
+                        }
+                    }
+                    // Do micro
+                    boolean micro_happened = false;
+                    try {
+                        // Check attack channel for the position of an enemy robot
+                        MapLocation target = Communication.read_location(rc, Communication.attack_channel);
+                        if (target != null && rc.getLocation().distanceSquaredTo(target) < 200) {
+                            pather.setWaypoint(target);
+                            micro_happened = true;
+                        }
+
+                        // With probability 0.05, clear the attack channel.
+                        if (rand.nextInt(20) < 1) {
+                            Communication.clear_channel(rc, Communication.attack_channel);
+                        }
+
+                        // Check the defense channel
+                        target = Communication.read_location(rc, Communication.defense_channel);
+                        if (target != null && rc.getLocation().distanceSquaredTo(target) < 500) {
+                            pather.setWaypoint(target);
+                            micro_happened = true;
+                        }
+
+                        // Check for a nearby robot
+                        Robot[] nearbyEnemies = rc.senseNearbyGameObjects(rc.getRobot().getClass(), rc.getType().sensorRadiusSquared, rc.getTeam().opponent());
+                        double min_health = 50000;
+                        for (Robot r : nearbyEnemies) {
+                            RobotInfo info = rc.senseRobotInfo(r);
+                            if (target == null || info.health < min_health) {
+                                min_health = info.health;
+                                target = info.location;
+                            }
+                        }
+                        if (target != null) {
+                            pather.setWaypoint(target);
+                            micro_happened = true;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Exception in micro");
+                    }
+                    // If no micro happens, target an enemy pasture.
+                    if (!micro_happened) {
+                        MapLocation[] enemyPastures = rc.sensePastrLocations(opp);
+                        if (enemyPastures.length > 0) {
+                            MapLocation currentWaypoint = pather.next_waypoint;
+                            boolean waypointOkay = false;
+                            for (MapLocation loc : enemyPastures) {
+                                if (loc.equals(currentWaypoint)) {
+                                    waypointOkay = true;
+                                    break;
+                                }
+                            }
+                            if (!waypointOkay) {
+                                int index = rand.nextInt(enemyPastures.length);
+                                // If the pasture is very close to the enemy HQ, go for something else
+                                if (enemyPastures[index].distanceSquaredTo(enemyHQLocation) <= 10) {
+                                    // Do a linear search for something else
+                                    for(int i = 0; i < enemyPastures.length; i++) {
+                                        if(enemyPastures[i].distanceSquaredTo(enemyHQLocation) > 10) {
+                                            index = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                                pather.setWaypoint(enemyPastures[index]);
+                            }
+                        } else {
+                            pather.setWaypoint(rallypoint);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            rc.yield();
+        }
+    }
+
+    static class Attacker {
+        Team opp;
+        Random rand;
+        public Attacker(RobotController rc, Random rng) {
+            opp = rc.getTeam().opponent();
+            rand = rng;
+        }
+        public boolean doAttack(RobotController rc) {
+            // Returns true if an attack happened
+            Robot[] nearbyRobots = rc.senseNearbyGameObjects(rc.getRobot().getClass(), RobotType.SOLDIER.attackRadiusMaxSquared, opp);
+            RobotInfo target = null;
+            for (Robot r : nearbyRobots) {
+                try {
+                    RobotInfo info = rc.senseRobotInfo(r);
+                    if (info.type != RobotType.HQ && (target == null || info.health < target.health)) {
+                        target = info;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Exception in attacking");
+                }
+            }
+            if (target != null) {
+                try {
+                    // With probability 0.2, broadcast the target.
+                    if (rand.nextInt(5) < 1) {
+                        Communication.send_location(rc, Communication.attack_channel, target.location);
+                    }
+                    rc.attackSquare(target.location);
+                    return true;
+                } catch (GameActionException e) {
+                    System.out.println("Invalid attack");
+                }
+            }
+            return false;
+        }
+    }
+    
+    static class Pathfinder {
+        public boolean wall_following;
+        public boolean clockwise;
+        public Direction last_wall;
+        public Direction last_move;
+        public MapLocation next_waypoint;
+        int switchCount, lastSwitchCount, switchCountDecCount;
+        Random rand;
+        boolean exact;
+        RobotController rc;
+        int[][] voidRegions;
+        int nextVoidRegion;
+
+        public Pathfinder(RobotController cont) {
+            wall_following = false;
+            last_wall = Direction.NONE;
+            next_waypoint = null;
+            switchCount = 7;
+            lastSwitchCount = 7;
+            switchCountDecCount = 15;
+            clockwise = false;
+            exact = false;
+            rc = cont;
+            // All the robots use the same seed so that pathing is deterministic, but mixes well
+            rand = new Random();
+
+            int width = rc.getMapWidth();
+            int height = rc.getMapHeight();
+            voidRegions = new int[][width];
+            for(int i = 0; i < width; i++) {
+                voidRegions[i] = new int[height];
+                for(int j = 0; j < height; j++) {
+                    voidRegions[i][j] = 0;
+                }
+            }
+
+            nextVoidRegion = 1;
+
+            // Fill all the void regions
+            // This should take a while
+            for(int i = 0; i < width; i++) {
+                for(int j = 0; j < height; j++) {
+                    if (voidRegions[i][j] == 0 && rc.senseTerrainTile(loc) == TerrainTile.VOID) {
+                        fillVoidRegion(new MapLocation(i,j));
+                    }
+                }
+            }
+        }
+
+        Direction[] orthogonalDirections = {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
+        void fillVoidRegion(MapLocation loc) {
+            doFillVoidRegion(loc, nextVoidRegion);
+            nextVoidRegion++;
+        }
+
+        void doFillVoidRegion(MapLocation loc, int id) {
+            if (rc.senseTerrainTile(loc) == TerrainTile.VOID && voidRegions[loc.x][loc.y] == 0) {
+                voidRegions[loc.x][loc.y] = id;
+                for(Direction d : orthogonalDirections) {
+                    doFillVoidRegions(loc.add(d), id);
+                }
+            }
+        }
+
+        public void setWaypoint(MapLocation w) {
+            if (!w.equals(next_waypoint)) {
+                next_waypoint = w;
+                wall_following = false;
+                switchCount = lastSwitchCount;
+            }
+        }
+
+        public Direction nextDirection(RobotController rc) {
+            if (next_waypoint == null || rc.getLocation().equals(next_waypoint)) {
+                return Direction.NONE;
+            }
+            if (!exact && rc.getLocation().distanceSquaredTo(next_waypoint) < 9) {
+                return Direction.NONE;
+            }
+            switchCountDecCount--;
+            if(switchCountDecCount < 0) {
+                lastSwitchCount--;
+                if(lastSwitchCount < 5) {
+                    lastSwitchCount = 4;
+                }
+                switchCountDecCount = 15;
+            }
+            MapLocation curLoc = rc.getLocation();
+            Direction direct_move = curLoc.directionTo(next_waypoint);
+            if(wall_following && last_move != null && !direct_move.equals(opposite(last_move)) && customCanMove(rc, direct_move)) {
+                switchCount--;
+                if (switchCount < 0) {
+                    wall_following = false;
+                    lastSwitchCount++;
+                    switchCount = lastSwitchCount;
+                }
+            }
+            if(!wall_following) {
+                if(!customCanMove(rc, direct_move)) {
+                    switchCount--;
+                    if (switchCount < 0) {
+                        wall_following = true;
+                        last_wall = direct_move;
+                        lastSwitchCount++;
+                        switchCount = lastSwitchCount;
+                        clockwise = rand.nextBoolean();
+                    } else {
+                        for(Direction d : approximateDirections(direct_move)) {
+                            if(customCanMove(rc, d)) {
+                                last_move = d;
+                                return d;
+                            }
+                        }
+                    }
+                } else {
+                    last_move = direct_move;
+                    return direct_move;
+                }
+            }
+            if(wall_following) {
+                if (clockwise) {
+                    for(Direction d : clockwiseDirectionsFrom(last_wall)) {
+                        if(customCanMove(rc, d)) {
+                            last_wall = counterclockwiseFrom(d);
+                            last_move = d;
+                            return d;
+                        }
+                    }
+                } else {
+                    for(Direction d : counterclockwiseDirectionsFrom(last_wall)) {
+                        if(customCanMove(rc, d)) {
+                            last_wall = clockwiseFrom(d);
+                            last_move = d;
+                            return d;
+                        }
+                    }
+                }
+            }
+            last_move = Direction.NONE;
+            return Direction.NONE;
+        }
+    }
+
+    static boolean customCanMove(RobotController rc, Direction d) {
+        // Treats squares near the enemy HQ as bad
+        if (!rc.canMove(d)) {
+            return false;
+        }
+        MapLocation curLoc = rc.getLocation();
+        MapLocation dest = curLoc.add(d);
+        return dest.distanceSquaredTo(enemyHQLocation) > 27.95;
+    }
+
+    static boolean customMove(RobotController rc, Direction d) throws GameActionException {
+        // Only move into enemy firing range if there is reasonable support.
+        MapLocation curLoc = rc.getLocation();
+        MapLocation nextLoc = curLoc.add(d);
+        Robot[] dangerousEnemyRobots = rc.senseNearbyGameObjects(rc.getRobot().getClass(), nextLoc, RobotType.SOLDIER.attackRadiusMaxSquared, rc.getTeam().opponent());
+        int dangerousEnemyCount = 0;
+        for (Robot r : dangerousEnemyRobots) {
+            RobotInfo info = rc.senseRobotInfo(r);
+            if (info.type == RobotType.SOLDIER) {
+                dangerousEnemyCount++;
+            }
+        }
+        if(dangerousEnemyCount == 0) {
+            rc.move(d);
+            return true;
+        }
+        Robot[] nearbyAlliedRobots = rc.senseNearbyGameObjects(rc.getRobot().getClass(), RobotType.SOLDIER.sensorRadiusSquared, rc.getTeam());
+        Robot[] nearbyEnemyRobots = rc.senseNearbyGameObjects(rc.getRobot().getClass(), RobotType.SOLDIER.sensorRadiusSquared, rc.getTeam().opponent());
+        if(nearbyAlliedRobots.length - nearbyEnemyRobots.length >= dangerousEnemyCount/4) {
+            rc.move(d);
+            return true;
+        }
+        return false;
+    }
+
+    static boolean customSneak(RobotController rc, Direction d) throws GameActionException {
+        // Only move into enemy firing range if there is reasonable support.
+        MapLocation curLoc = rc.getLocation();
+        MapLocation nextLoc = curLoc.add(d);
+        Robot[] dangerousEnemyRobots = rc.senseNearbyGameObjects(rc.getRobot().getClass(), nextLoc, RobotType.SOLDIER.attackRadiusMaxSquared, rc.getTeam().opponent());
+        int dangerousEnemyCount = 0;
+        for (Robot r : dangerousEnemyRobots) {
+            RobotInfo info = rc.senseRobotInfo(r);
+            if (info.type == RobotType.SOLDIER) {
+                dangerousEnemyCount++;
+            }
+        }
+        if(dangerousEnemyCount == 0) {
+            rc.move(d);
+            return true;
+        }
+        Robot[] nearbyAlliedRobots = rc.senseNearbyGameObjects(rc.getRobot().getClass(), RobotType.SOLDIER.sensorRadiusSquared, rc.getTeam());
+        Robot[] nearbyEnemyRobots = rc.senseNearbyGameObjects(rc.getRobot().getClass(), RobotType.SOLDIER.sensorRadiusSquared, rc.getTeam().opponent());
+        if(nearbyAlliedRobots.length - nearbyEnemyRobots.length >= dangerousEnemyCount/4) {
+            rc.sneak(d);
+            return true;
+        }
+        return false;
+    }
+
+    static boolean moveApproximatelyToward(RobotController rc, MapLocation dest) {
+        // Returns whether the move actually happened
+        for (Direction d : approximateDirections(rc.getLocation().directionTo(dest))) {
+            if (customCanMove(rc, d)) {
+                try {
+                    rc.move(d);
+                    return true;
+                } catch (GameActionException e) {
+                    System.out.println("Exception in moveApproximatelyToward");
+                }
+            }
+        }
+        return false;
+    }
+
+    static Direction[] north_neighbors = {Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST};
+    static Direction[] north_east_neighbors = {Direction.NORTH_EAST, Direction.EAST, Direction.NORTH};
+    static Direction[] east_neighbors = {Direction.EAST, Direction.SOUTH_EAST, Direction.NORTH_EAST};
+    static Direction[] south_east_neighbors = {Direction.SOUTH_EAST, Direction.SOUTH, Direction.EAST};
+    static Direction[] south_neighbors = {Direction.SOUTH, Direction.SOUTH_WEST, Direction.SOUTH_EAST};
+    static Direction[] south_west_neighbors = {Direction.SOUTH_WEST, Direction.WEST, Direction.SOUTH};
+    static Direction[] west_neighbors = {Direction.WEST, Direction.NORTH_WEST, Direction.SOUTH_WEST};
+    static Direction[] north_west_neighbors = {Direction.NORTH_WEST, Direction.NORTH, Direction.WEST};
+    static Direction[] all_directions = {Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST};
+
+    static Direction[] approximateDirections(Direction d) {
+        switch(d) {
+            case NORTH:
+                return north_neighbors;
+            case NORTH_EAST:
+                return north_east_neighbors;
+            case EAST:
+                return east_neighbors;
+            case SOUTH_EAST:
+                return south_east_neighbors;
+            case SOUTH:
+                return south_neighbors;
+            case SOUTH_WEST:
+                return south_west_neighbors;
+            case WEST:
+                return west_neighbors;
+            case NORTH_WEST:
+                return north_west_neighbors;
+        }
+        return all_directions;
+    }
+
+    static Direction[] clockwise_north = {Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST};
+    static Direction[] clockwise_north_east = {Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST, Direction.NORTH};
+    static Direction[] clockwise_east = {Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST};
+    static Direction[] clockwise_south_east = {Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST, Direction.EAST};
+    static Direction[] clockwise_south = {Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST};
+    static Direction[] clockwise_south_west = {Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH};
+    static Direction[] clockwise_west = {Direction.WEST, Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST};
+    static Direction[] clockwise_north_west = {Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST};
+
+    static Direction[] clockwiseDirectionsFrom(Direction d) {
+        switch (d) {
+            case NORTH:
+                return clockwise_north;
+            case NORTH_EAST:
+                return clockwise_north_east;
+            case EAST:
+                return clockwise_east;
+            case SOUTH_EAST:
+                return clockwise_south_east;
+            case SOUTH:
+                return clockwise_south;
+            case SOUTH_WEST:
+                return clockwise_south_west;
+            case WEST:
+                return clockwise_west;
+            case NORTH_WEST:
+                return clockwise_north_west;
+        }
+        return clockwise_north;
+    }
+
+    static Direction[] counterclockwise_north = {Direction.NORTH, Direction.NORTH_WEST, Direction.WEST, Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST, Direction.EAST, Direction.NORTH_EAST};
+    static Direction[] counterclockwise_north_west = {Direction.NORTH_WEST, Direction.WEST, Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST, Direction.EAST, Direction.NORTH_EAST, Direction.NORTH};
+    static Direction[] counterclockwise_west = {Direction.WEST, Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST, Direction.EAST, Direction.NORTH_EAST, Direction.NORTH, Direction.NORTH_WEST};
+    static Direction[] counterclockwise_south_west = {Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST, Direction.EAST, Direction.NORTH_EAST, Direction.NORTH, Direction.NORTH_WEST, Direction.WEST};
+    static Direction[] counterclockwise_south = {Direction.SOUTH, Direction.SOUTH_EAST, Direction.EAST, Direction.NORTH_EAST, Direction.NORTH, Direction.NORTH_WEST, Direction.WEST, Direction.SOUTH_WEST};
+    static Direction[] counterclockwise_south_east = {Direction.SOUTH_EAST, Direction.EAST, Direction.NORTH_EAST, Direction.NORTH, Direction.NORTH_WEST, Direction.WEST, Direction.SOUTH_WEST, Direction.SOUTH};
+    static Direction[] counterclockwise_east = {Direction.EAST, Direction.NORTH_EAST, Direction.NORTH, Direction.NORTH_WEST, Direction.WEST, Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST};
+    static Direction[] counterclockwise_north_east = {Direction.NORTH_EAST, Direction.NORTH, Direction.NORTH_WEST, Direction.WEST, Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST, Direction.EAST};
+    static Direction[] counterclockwiseDirectionsFrom(Direction d) {
+        switch (d) {
+            case NORTH:
+                return counterclockwise_north;
+            case NORTH_EAST:
+                return counterclockwise_north_east;
+            case EAST:
+                return counterclockwise_east;
+            case SOUTH_EAST:
+                return counterclockwise_south_east;
+            case SOUTH:
+                return counterclockwise_south;
+            case SOUTH_WEST:
+                return counterclockwise_south_west;
+            case WEST:
+                return counterclockwise_west;
+            case NORTH_WEST:
+                return counterclockwise_north_west;
+        }
+        return counterclockwise_north;
+    }
+
+    static Direction counterclockwiseFrom(Direction d) {
+        switch (d) {
+            case NORTH:
+                return Direction.NORTH_WEST;
+            case NORTH_EAST:
+                return Direction.NORTH;
+            case EAST:
+                return Direction.NORTH_EAST;
+            case SOUTH_EAST:
+                return Direction.EAST;
+            case SOUTH:
+                return Direction.SOUTH_EAST;
+            case SOUTH_WEST:
+                return Direction.SOUTH;
+            case WEST:
+                return Direction.SOUTH_WEST;
+            case NORTH_WEST:
+                return Direction.WEST;
+            case NONE:
+                return Direction.NONE;
+            case OMNI:
+                return Direction.OMNI;
+        }
+        return Direction.NONE;
+    }
+
+    static Direction clockwiseFrom(Direction d) {
+        switch (d) {
+            case NORTH:
+                return Direction.NORTH_EAST;
+            case NORTH_EAST:
+                return Direction.EAST;
+            case EAST:
+                return Direction.SOUTH_EAST;
+            case SOUTH_EAST:
+                return Direction.SOUTH;
+            case SOUTH:
+                return Direction.SOUTH_WEST;
+            case SOUTH_WEST:
+                return Direction.WEST;
+            case WEST:
+                return Direction.NORTH_WEST;
+            case NORTH_WEST:
+                return Direction.NORTH;
+            case NONE:
+                return Direction.NONE;
+            case OMNI:
+                return Direction.OMNI;
+        }
+        return Direction.NONE;
+    }
+
+    static Direction opposite(Direction d) {
+        switch (d) {
+            case NORTH:
+                return Direction.SOUTH;
+            case NORTH_EAST:
+                return Direction.SOUTH_WEST;
+            case EAST:
+                return Direction.WEST;
+            case SOUTH_EAST:
+                return Direction.NORTH_WEST;
+            case SOUTH:
+                return Direction.NORTH;
+            case SOUTH_WEST:
+                return Direction.NORTH_EAST;
+            case WEST:
+                return Direction.EAST;
+            case NORTH_WEST:
+                return Direction.SOUTH_EAST;
+            case NONE:
+                return Direction.NONE;
+            case OMNI:
+                return Direction.OMNI;
+        }
+        return Direction.NONE;
+    }
+}
